@@ -1,0 +1,79 @@
+<html>
+
+  <head>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+  </head>
+
+  <body>
+
+    <h1>Ajax Test</h1>
+
+    <form>
+
+      BibNumber: <input type="text" id="bibNumber" name="bibNumber">
+
+      tactical: <input type="text" id="tactical" name="tactical">
+
+      <button type="button" id="saveButton">Save</button>
+
+    </form>
+
+    <div id="outdata"></div>
+
+        
+
+    <script lang="javascript">
+
+      
+
+      $("#saveButton").click( function() {
+
+        var name = $("#bibNumber").val();
+
+        var age = $("#tactical").val();
+
+        var inputs = {};
+
+        inputs["bibNumber"] = bibNumber;
+
+        inputs["tactical"] = tactical;
+
+        
+
+        var serializedData = $(inputs).serialize();
+
+        var $request = $.ajax({
+
+          url: "/controller/incidentcontroller1.php",
+
+          type: "post",
+
+          data: inputs
+
+        });
+
+        
+
+        $request.done( function( response, textInfo, jqXHR) {
+
+          $("#outdata").html(response);
+
+        });
+
+        
+
+        $request.fail( function (jqXHR, textInfo, errorThrown) {
+
+          $("#outdata").html(textInfo);
+
+        });
+
+      });
+
+    </script>
+
+   </body>
+
+</html>

@@ -1,0 +1,140 @@
+#form-wrapper {
+    position: relative;
+}
+#incidentTypeKeyWrapper {
+    position: absolute;
+    z-index: 100;
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+    right: 0;
+    box-shadow: 1px 2px 5px #888888;
+}
+
+#page-wrapper {
+	margin: 0em;
+}
+
+/***
+	Styling for table
+***/
+.table-hover>tbody>tr:hover {
+    background-color: #ccc;
+}
+/* helps with the formating of the cells of table */
+.wordbreak th, .wordbreak td {
+    word-break: break-word;
+}
+.pull-left {
+    width: 50%;
+}
+
+/***
+	Styling for the side pop-up of incident information when incident is clicked on
+***/
+
+#saveIncident {
+    margin-top: 3em;
+}
+
+.show {
+	display:block;
+	width: 25%;
+	border: 1px solid red;
+}
+
+.additionalInfo {
+	position: relative;
+}
+
+.hideInfo {
+    display: none;
+}
+
+.showInfo {
+    float: right;
+    width: 40%;
+}
+
+.closeInfo {
+    color: red;
+    font-weight: bolder;
+    font-size: 2em;
+    opacity: 100;
+    float: right;
+    text-shadow: 0 1px 0 #fff;
+    filter: alpha(opacity=20);
+    padding: 1em;
+}
+
+.closeInfo:hover, .closeInfo:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+    filter: alpha(opacity=50);
+    opacity: .5;
+}
+
+#kclock {
+padding-left: 0px;
+padding-right: 10px;
+margin-right: 30px;
+margin-top: 0px;
+padding-top: 22px;
+font-size: 1.7em;
+width: 75px;
+
+}
+
+.scroll {
+    max-height:120px;
+    overflow-y: scroll;
+    
+}
+
+.typeahead, .tt-query, .tt-hint {
+    border: 2px solid #CCCCCC;
+    border-radius: 8px;
+    font-size: 24px;
+    height: 30px;
+    line-height: 30px;
+    outline: medium none;
+    padding: 8px 12px;
+    width: 396px;
+}
+.typeahead {
+    background-color: #FFFFFF;
+}
+.typeahead:focus {
+    border: 2px solid #0097CF;
+}
+.tt-query {
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+}
+.tt-hint {
+    color: #999999;
+}
+.tt-dropdown-menu {
+    background-color: #FFFFFF;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    margin-top: 12px;
+    padding: 8px 0;
+    width: 422px;
+}
+.tt-suggestion {
+    font-size: 24px;
+    line-height: 24px;
+    padding: 3px 20px;
+}
+.tt-suggestion.tt-is-under-cursor {
+    background-color: #0097CF;
+    color: #FFFFFF;
+}
+.tt-suggestion p {
+    margin: 0;
+}
+
+/***
+	End of styling for the side pop-up of incident information when incident is clicked on
+***/

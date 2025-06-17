@@ -1,0 +1,125 @@
+<a href="http://www.n7radio.org/dev-lotoja/view/">Back to application</a>
+<p>This program was split into different parts. We created our own setup of the code that implements similar methodologies used in Model/View/Controller applications. Here are the different folders and files and what can be found there.</p>
+<p>View – This folder contains all things that have to do with what happens in the browser. Some of the folders are part of the bootstrap template. The only folders and files we created were:</p>
+<ul>
+	<li>js
+		<ul>
+			<li>updateIncident.js
+				<ul>
+					<li>Handles all browser functionality for updating an incident
+						<ul>
+							<li>Click and display of single incident information in Additional Info Form
+								<ul>
+									<li>Uses /controller/selectsingleincident.php file</li>
+									<li>Uses /model/sqlHelper.php file</li>
+								</ul>
+							</li>
+							<li>Close of Additional Info Form
+								<ul>
+									<li>Closes the form and clears it.</li>
+								</ul>
+							</li>
+						</ul>
+					<li>Save of Additional Info Form for clicked incident
+						<ul>
+							<li>Uses /controller/update_controller.php file
+								<ul>
+									<li>Uses /model/sqlHelper.php file</li>
+								</ul>
+							</li>
+							<li>Displays new information in table on browser</li>
+							<li>Closes form after information is saved and clears form</li>
+						</ul>
+					</li>
+					<li>Cancel of Additional Info Form
+						<ul>
+							<li>Closes the form and clears it</li>
+						</ul>
+					</li>
+					<li>Add Comment
+						<ul>
+							<li>This is currently not being implemented and used</li>
+						</ul>
+					</li>
+				</ul>
+			</li>
+			<li>selectAllIncidents.js
+				<ul>
+					<li>getIncidents() function runs when page is first loaded to display all incidents found in the database
+						<ul>
+							<li>Uses /controller/selectincidents.php
+								<ul>
+									<li>Uses /model/sqlHelper.php file</li>
+								</ul>
+						</ul>
+					<li>getNewIncidents() function is used with the polling mechanism that continually runs while the page is open to get all new incidents that may be inserted by other user by doesn’t show for current user.
+						<ul>
+							<li>Uses /controller/get_new_incidents.php file
+								<ul>
+									<li>Uses /model/sqlHelper.php file</li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+					<li>doPoll() function is the polling mechanism that is ran which runs the getNewIncidents() function</li>
+				</ul>
+			<li>insertIncident.js
+				<ul>
+					<li>This controller is ran when submit button is clicked on the main form.</li>
+					<li>Uses /controller/insert_update_controller.php file</li>
+				</ul>
+			<li>custom.js
+				<ul>
+					<li>Has a few things to handle some minor functionality like the command center pop-up form and the Incident Type Key pop-up</li>
+				</ul>
+			</li>
+		</ul>
+	</li>
+	<li>css
+		<ul>
+			<li>custom.css</li>
+			<li>Very minimal styling was done since we used a Bootstrap template.</li>
+		</ul>
+	</li>
+	<li>index.html
+		<ul>
+			<li>All html is found here.</li>
+		</ul>
+	</li>
+</ul>
+
+<p>All other files were part of the template that we never edited.</p>
+<p>Controller – This folder contains all files used to help tie functionality between the browser and the database. Each file calls a function from the sqlHelper class found in the /model/sqlHelper.php file. See the View documentation to see where each controller file is being used. </p>
+<p>Model – The only important file in this folder is the sqlHelper.php file. It contains one PHP class call sqlHelper that contains several different functions to manage all transactions with the database. Those functions are:</p>
+<ul>	
+	<li>select()
+		<ul>
+			<li>Selects all incidents.</li>
+			<li>Returns all records of table Test back to the controller that called this function</li>
+		</ul>
+	</li>
+	<li>selectnewincidents($incidentID))
+		<ul>
+			<li>Selects all new incidents greater than the newest one found on the website in the table.</li>
+			<li>Returns all those new incidents back to the controller that called this function</li>
+		</ul>
+	</li>
+	<li>singleSelect($incidentID)
+		<ul>
+			<li>Selects all information of the incident that is selected in the table on the website. </li>
+			<li>Returns all information of the incident back to the controller that called this class</li>
+		</ul>
+	</li>
+	<li>insert($bibNumber, $tactical, $details, $location, $commandCenter, $incidentType, $timeStamp)
+		<ul>
+			<li>Creates a new incident from fields in the main input form</li>
+			<li>Returns the incremented incident ID</li>
+		</ul>
+	</li>
+	<li>update($incidentID, $originalDetail, $additionalDetail, $timeStamp)
+		<ul>
+			<li>Gets all information allowed to be updated an inserts it into the details field in the database. Old information in the details field remains the same.</li>
+			<li>Returns old and new details back to the controller that called this function.</li>
+		</ul>
+	</li>
+</ul>

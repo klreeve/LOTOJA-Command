@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!--
+<meta http-equiv="refresh" content="0;url=pages/index.html">
+-->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content=""> 
+    <meta name="author" content="">
+
+    <title>LOTOJA Incident Management</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="./bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- MetisMenu CSS -->
+    <link href="./bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
+
+    <!-- DataTables CSS -->
+    <link href="./bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css" rel="stylesheet">
+
+    <!-- DataTables Responsive CSS -->
+    <link href="./bower_components/datatables-responsive/css/dataTables.responsive.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="./dist/css/sb-admin-2.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="./bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Custom CSS -->
+    <link href="./css/custom.css" rel="stylesheet" type="text/css">
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body onload="startTime()">
+
+
+    <div id="wrapper">
+	<div class="row">
+
+	   <div class="col-md-4 header">
+
+			<img src="lotoja_logo.png" width="75%" alt="Lotoja Home">
+			
+
+	    </div>
+	    <div class="col-md-5 header">
+ 	    	<h1>Incident Management System</h1>
+	    </div>
+	    <div class="col-md-3 header">
+ 	    	<h3>Command Center</h3>
+		<label id="ccLabel">Temp Cache</label>
+	    </div>
+
+	</div>
+</br>
+        <div id="page-wrapper">
+
+		<div class="panel panel-default">
+			<div class="panel-heading">
+                        
+                        	
+                        	<div id="kclock" class= "pull-right"></div>
+                        	<h2>Add Incident </h2>
+                       	</div>
+                     
+                      
+                        <!-- /.panel-heading -->
+			<div id="form-wrapper" class="panel-body">
+				<form class="incidentForm form-inline" method="post" role="form">
+    					
+    					<div class="form-group">
+      						<h4><label for="tactical">Reported By:</label></h4>
+      						<input class="form-control" id="tactical" name="tactical" placeholder="Enter Tactical">
+    					</div>
+              <div class="form-group">
+                 <h4><label for="bibNumber">Bib #:</label></h4>
+                  <input class="form-control" id="bibNumber" name="bibNumber" placeholder="Enter Bib TEST">
+              </div>
+					<div class="form-group">
+      						<h4><label for="details">Details:</label></h4>
+						<textarea class="form-control" rows="1" id="details" name="details" placeholder="Enter Details" style="margin: 0px; width: 367px;"></textarea>
+      						<!--<input class="form-control" placeholder="Enter Details">-->
+    					</div>						<div class="form-group">
+      						<h4><label for="location">Location:</label></h4>
+      						<input class="form-control" id="location" name="location" placeholder="Enter location">
+    					</div>
+					<div class="form-group">
+      						<h4><label for="incidentType">Incident Type:</label></h4>
+      						<input type = "text"  class="form-control typeahead tt-query" id="incidentType" name="incidentType" placeholder="Enter Incident Type">						</div>
+					
+					<div class="form-group">
+    						<button id="saveIncident" class="btn btn-primary">Submit</button>
+    					</div>
+  				</form>
+				<div id="incidentTypeKeyWrapper" class="row">
+<div id="incidentTypeKey" class="pull-right hidden">
+				<div class="col-md-6">
+					<p>
+					Accident
+					</p>
+					<p>
+					 Medical
+					</p>
+					<p>
+					Drop
+					</p>
+					<p>
+					Cyclist
+					</p>
+					<p>
+					 Support
+					</p>
+</div>
+<div class="col-md-6">
+					<p>
+          Infraction
+          </p>
+          <p>
+					Info
+					<p>
+					Hazzard 
+					</p>
+					<p>
+					CheckIn
+					</p>
+					<p>
+					CheckOut
+					</p>
+					<p>
+					Lost
+					</p>
+					<p>
+					Found
+					</p>
+</div>
+</div>
+				</div>
+			</div>
+		<div id="outdata"></div>
+
+<!--
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">Tables</h1>
+                </div>
+                
+            </div>
+-->
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-lg-12">
+			<!-- incidents class for js -->
+                    <div class="incidents panel panel-default">
+                        <div class="panel-heading">
+                            <h2>Incident List</h2>
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <div class="dataTable_wrapper table-responsive">
+                                <table class="incidentTable table table-striped table-bordered table-hover wordbreak" id="dataTables-example">
+                                    <thead>
+                                        <tr>
+                                            <th>Time Stamp</th>
+					    <th>ID</th>
+                                            <th>Type</th>
+                                            <th>Bib #</th>
+                                            <th>Reported By</th>
+                                            <th>Details</th>
+					    <th>Location</th>
+					    <th>Command</th>
+					    <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="list">
+<!--
+                                        <tr class="incidentID traffic">
+                                            <td>2015-10-27 17:44:42</td>
+					    <td>1027</td>
+                                            <td>Traffic</td>
+                                            <td>LJ01253</td>
+                                            <td class="center">LB18</td>
+                                            <td class="center">This is a short description of what happened</td>
+					    <td class="center">Preston, ID</td>
+					    <td class="center">Cache</td>
+                                            <td class="center">Active</td>
+                                        </tr>
+-->
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.table-responsive -->
+                            <div class="well">
+                                
+                            </div>
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+		    <!-- additionalInfoWrapper -->
+		    <div class="additionalInfoWrapper hideInfo">
+<div id="additionalInfo" class="incidentID">
+<br />
+<label class="col-sm-10 control-label">Change Incident Status To:</label> <button id="changeStatus" class="btn btn-primary"></button>
+
+
+  <div id="accident">
+
+
+
+    <a href="#" class="closeInfo" title="close">x</a>
+
+
+
+    <h2>Update Incident</h2>
+
+
+
+      <form class="" role="form">
+
+
+
+    <div class="form-group">
+
+
+
+      <label class="col-sm-10 control-label">Timestamp:</label>
+
+
+
+      <div class="col-sm-10">
+
+
+
+        <input class="form-control" id="time" type="text" value="" disabled>  
+
+
+
+      </div>
+
+
+
+      <label class="col-sm-10 control-label">Incident ID:</label>
+
+
+
+      <div class="col-sm-10">
+
+
+
+        <input class="form-control" id="incident" type="text" value="" disabled>
+
+
+
+      </div>
+
+
+
+      <label class="col-sm-10 control-label">Incident Type:</label>
+
+
+
+      <div class="col-sm-10">
+
+
+
+        <input class="form-control" id="type" type="text" value="">
+
+
+
+      </div>
+
+      <!--- THis is the code I copied in  -->
+
+<div class="commentWrapper row">
+
+    <form>
+
+      <label class="col-sm-10 control-label">Additional Details:</label>
+
+      <div class="col-sm-10">
+        <textarea class="form-control" rows="5" id="addeddetail"></textarea>
+      </div>
+
+      <label class="col-sm-10 control-label">Reported By:</label>
+
+      <div class="col-sm-10">
+
+        <input class="form-control" id="reportedupdate" type="text" value="">
+
+      </div>
+
+      <label class="timestamp"></label>
+
+    </form>
+
+  </div>
+
+<!-- End of code I copied in -->
+
+      <label class="col-sm-10 control-label">Bib #:</label>
+
+
+
+      <div class="col-sm-10">
+
+
+
+        <input class="form-control" id="bib" type="text" value="">
+
+
+
+      </div>
+
+
+
+      <label class="col-sm-10 control-label">Reported By:</label>
+
+
+
+      <div class="col-sm-10">
+
+
+
+        <input class="form-control" id="tact" type="text" value="">
+
+
+
+      </div>
+
+
+
+      <label class="col-sm-10 control-label">Details:</label>
+
+
+
+      <div class="col-sm-10">
+
+	<textarea class="form-control" rows="5" id="det"></textarea>
+
+
+      </div>
+
+
+
+	<label class="col-sm-10 control-label">Location:</label>
+
+
+
+      <div class="col-sm-10">
+
+
+
+        <input class="form-control" id="loc" type="text" value="">
+
+
+
+      </div>
+
+
+
+	<label class="col-sm-10 control-label">Command Center:</label>
+
+
+
+      <div class="col-sm-10">
+
+
+
+        <input class="form-control" id="commandcenter" type="text" value="" disabled>
+
+
+
+      </div>
+
+<!-- Place I copied code from -->
+
+	
+	
+
+	<button type="button" class="btn btn-success saveComment">Save</span></button>
+  <button type="button" class="btn btn-danger cancelComment">Cancel</span></button>
+
+    </div>
+
+
+
+  </form>
+
+
+
+  </div>
+
+
+
+</div>
+  		    </div>
+		    <!-- /.additionalInfoWrapper -->
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+	</div>
+	
+    </div>
+    <!-- /#wrapper -->
+<!-- Modal -->
+<div class="modal fade" id="commandModal" tabindex="-1" role="dialog" aria-labelledby="memberModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                 <h4 class="modal-title" id="memberModalLabel">Command Center Sign-in</h4>
+
+            </div>
+            <div class="modal-body">
+                <p>Please choose your command center</p>
+                    <form id="ccForm" role="form">
+  			<div class="form-group">
+    				<label for="ccInput">Command Center</label>
+    				<input class="form-control" id="ccInput"><br/>
+				<button type="submit" id="ccSubmit" class="btn btn-primary pull-right" >Submit</button><br/>
+  			</div>
+
+		</form>
+            </div>
+            <div class="modal-footer">
+<!--
+<button type="submit" id="ccSubmit" class="btn btn-primary" data-dismiss="modal">Submit</button>
+-->
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+    <!-- jQuery -->
+    <script src="./bower_components/jquery/dist/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="./bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="./bower_components/metisMenu/dist/metisMenu.min.js"></script>
+
+    <!-- DataTables JavaScript -->
+    <script src="./bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
+    <script src="./bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js"></script>
+    <script src="./js/typeahead.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="./dist/js/sb-admin-2.js"></script>
+
+    <!-- Page-Level Demo Scripts - Tables - Use for reference -->
+    <script>
+    $(document).ready(function() {
+        $('#dataTables-example').DataTable({
+                responsive: true,
+                "order": [[ 1, "desc" ]],
+		"bAutoWidth": false,
+	        "aoColumns" : [
+	            { sWidth: '10px' },
+	            { sWidth: '5px' },
+	            { sWidth: '10px' },
+	            { sWidth: '10px' },
+	            { sWidth: '10px' },
+	            { sWidth: '140px' },
+	            { sWidth: '15px' },
+	            { sWidth: '25px' },
+	            { sWidth: '10px' }
+	        ]  
+        });
+    });
+    </script>
+    <!-- save incident script -->
+    <script src="./js/insertIncident.js"></script>
+<!-- select incidents -->
+    <script src="./js/selectAllIncidents.js"></script>
+    <script src="./js/custom.js"></script>
+    <script src="./js/updateIncident.js"></script>
+<!-- load modal on page load -->
+<script type="text/javascript">
+    $(document).ready(function () {
+
+    	$('#commandModal').modal('show');
+
+    });
+</script>
+
+
+<script>
+function startTime() {
+    var today = new Date();
+    var h = today.getHours();
+    var m = today.getMinutes();
+    var s = today.getSeconds();
+    m = checkTime(m);
+    s = checkTime(s);
+    document.getElementById('kclock').innerHTML =
+    h + ":" + m + ":" + s;
+    var t = setTimeout(startTime, 500);
+}
+function checkTime(i) {
+    if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+    return i;
+}
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){
+  $('input.typeahead').typeahead({
+    name: 'accounts',
+    local: ['Audi', 'BMW', 'Bugatti', 'Ferrari', 'Ford', 'Lamborghini', 'Mercedes Benz', 'Porsche', 'Rolls-Royce', 'Volkswagen']
+  });
+});  
+
+</script>
+
+
+</body>
+</html>
